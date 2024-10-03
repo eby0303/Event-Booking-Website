@@ -1,26 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProductList from './components/ProductList';
-import Slider from './components/Slider';  // Import Slider
+import Slider from './components/Slider';  
+import HallDetail from './components/HallDetail'; // Ensure you have this file
+import CateringDetail from './components/CateringDetail'; // Ensure you have this file
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const handleSearch = (term) => {
-    setSearchTerm(term);
-    console.log('Searching for:', term);
-  };
-
   return (
-    <div style={styles.app}>
-      <Navbar onSearch={handleSearch} />
-      <Slider />   {/* Add the Slider below Navbar */}
-      <div style={styles.content}>
-        <ProductList />
+    <Router>
+      <div style={styles.app}>
+        <Navbar />
+        <Slider />
+        <div style={styles.content}>
+          <Routes>
+            <Route path="/" element={<ProductList />} />
+            <Route path="/hall/:id" element={<HallDetail />} />
+            <Route path="/catering/:id" element={<CateringDetail />} />
+          </Routes>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </Router>
   );
 }
 
